@@ -55,6 +55,7 @@
   <exec_depend>message_runtime</exec_depend>
   <depend>geometry_msgs</depend>
   <depend>tf</depend>
+  <depend>moveit_ros_planning_interface</depend>
   <build_export_depend>roscpp</build_export_depend>
   <exec_depend>roscpp</exec_depend>
 

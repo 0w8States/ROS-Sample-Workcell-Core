@@ -13,6 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   message_generation
   tf
+  moveit_ros_planning_interface
 )
 
 ## System dependencies are found with CMake's conventions
