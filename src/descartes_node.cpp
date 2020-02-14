@@ -125,6 +125,13 @@ public:
     Eigen::Vector3d bot_left (-half_side, -half_side, 0);
     Eigen::Vector3d top_right (half_side, half_side, 0);
     Eigen::Vector3d bot_right (half_side, -half_side, 0);
+    
+    // Adding a second glue line for fun, larger outside area
+    Eigen::Vector3d lrg_top_left (-side_length, side_length, 0);
+    Eigen::Vector3d lrg_bot_left (-side_length, -side_length, 0);
+    Eigen::Vector3d lrg_top_right (side_length, side_length, 0);
+    Eigen::Vector3d lrg_bot_right (side_length, -side_length, 0);
+
 
     // Descartes requires you to guide it in how dense the points should be,
     // so you have to do your own "discretization".
@@ -141,6 +148,19 @@ public:
     path.insert(path.end(), segment2.begin(), segment2.end());
     path.insert(path.end(), segment3.begin(), segment3.end());
     path.insert(path.end(), segment4.begin(), segment4.end());
+
+    auto segment5 = makeLine(lrg_top_left, lrg_bot_left, step_size);
+    auto segment6 = makeLine(lrg_bot_left, lrg_bot_right, step_size);
+    auto segment7 = makeLine(lrg_bot_right, lrg_top_right, step_size);
+    auto segment8 = makeLine(lrg_top_right, lrg_top_left, step_size);
+
+
+    path.insert(path.end(), segment5.begin(), segment5.end());
+    path.insert(path.end(), segment6.begin(), segment6.end());
+    path.insert(path.end(), segment7.begin(), segment7.end());
+    path.insert(path.end(), segment8.begin(), segment8.end());
+
+
 
     return path;
   }
