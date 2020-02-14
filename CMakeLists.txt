@@ -14,6 +14,12 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   tf
   moveit_ros_planning_interface
+  ur5_demo_descartes
+  descartes_trajectory
+  descartes_planner
+  descartes_utilities
+  eigen_conversions
+  trajectory_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -60,6 +66,7 @@ find_package(catkin REQUIRED COMPONENTS
 add_service_files(
    FILES
    LocalizePart.srv
+   PlanCartesianPath.srv
 )
 
 ## Generate actions in the 'action' folder
@@ -73,6 +80,7 @@ add_service_files(
 generate_messages(
    DEPENDENCIES
    geometry_msgs
+   trajectory_msgs
 )
 
 ################################################
@@ -108,10 +116,18 @@ catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES myworkcell_node
   CATKIN_DEPENDS
-    roscpp
-    fake_ar_publisher
-    message_runtime
-    geometry_msgs
+   roscpp
+   fake_ar_publisher
+   message_runtime
+   geometry_msgs
+   tf
+   moveit_ros_planning_interface
+   ur5_demo_descartes
+   descartes_trajectory
+   descartes_planner
+   descartes_utilities
+   trajectory_msgs
+   eigen_conversions
 #  DEPENDS system_lib
 )
 
@@ -143,6 +159,7 @@ include_directories(
 # add_executable(${PROJECT_NAME}_node src/myworkcell_core_node.cpp)
 add_executable(vision_node src/vision_node.cpp)
 add_executable(myworkcell_node src/myworkcell_node.cpp)
+add_executable(descartes_node src/descartes_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -155,6 +172,7 @@ add_executable(myworkcell_node src/myworkcell_node.cpp)
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(vision_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(myworkcell_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(descartes_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 # target_link_libraries(${PROJECT_NAME}_node
@@ -163,6 +181,8 @@ add_dependencies(myworkcell_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EX
 
 target_link_libraries(vision_node ${catkin_LIBRARIES})
 target_link_libraries(myworkcell_node ${catkin_LIBRARIES})
+target_link_libraries(descartes_node ${catkin_LIBRARIES})
+
 #############
 ## Install ##
 #############
